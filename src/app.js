@@ -2,8 +2,10 @@ import express from "express";
 import morgan from "morgan";
 import productsRoutes from "./routes/products.routes";
 import authRoutes from "./routes/auth.routes";
+import { createRoles } from "./libs/initialSetup";
 
 const app = express();
+createRoles();
 
 //Meddlewares
 app.use(morgan("dev"));
