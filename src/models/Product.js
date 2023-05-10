@@ -6,6 +6,7 @@ const productSchema = new Schema({
   modelo: String,
   category: String,
   type: String,
+  top: { type: Boolean, default: false },
   gama: { type: String, default: "null" },
   usLang: {
     description: String,

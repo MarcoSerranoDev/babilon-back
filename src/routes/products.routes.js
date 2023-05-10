@@ -4,9 +4,11 @@ const router = Router();
 import * as productsCtrl from "../controllers/products.controller";
 import { authJwt } from "../middlewares";
 
-router.get("/", productsCtrl.getProducts);
+router.get("/topProducts", productsCtrl.getTopProducts);
 
 router.get("/:id", productsCtrl.getProductById);
+
+router.get("/", productsCtrl.getProducts);
 
 router.post(
   "/",

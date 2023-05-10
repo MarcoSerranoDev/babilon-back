@@ -40,3 +40,12 @@ export const deleteProductById = async (req, res) => {
     console.log(error);
   }
 };
+
+export const getTopProducts = async (req, res) => {
+  try {
+    const topProductsFinded = await Product.find({ top: true });
+    res.status(200).json(topProductsFinded);
+  } catch (error) {
+    console.log(error);
+  }
+};
