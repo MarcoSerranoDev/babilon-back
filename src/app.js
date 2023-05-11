@@ -5,6 +5,7 @@ import productsRoutes from "./routes/products.routes";
 import authRoutes from "./routes/auth.routes";
 import userRoutes from "./routes/user.routes";
 import artistRoutes from "./routes/artist.routes";
+import guitarRoutes from "./routes/guitar.routes";
 
 const app = express();
 createRoles();
@@ -18,5 +19,6 @@ app.use("/api/babilon/v1/products", productsRoutes);
 app.use("/api/babilon/v1/auth", authRoutes);
 app.use("/api/babilon/v1/users", userRoutes);
 app.use("/api/babilon/v1/artist", artistRoutes);
+app.use("/api/babilon/v1/guitar", guitarRoutes);
 
 export default app;
