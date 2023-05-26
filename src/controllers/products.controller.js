@@ -7,7 +7,8 @@ export const createProduct = async (req, res) => {
 };
 
 export const getProducts = async (req, res) => {
-  const products = await Product.find();
+  const query = req.query;
+  const products = await Product.find(query);
   res.json(products);
 };
 

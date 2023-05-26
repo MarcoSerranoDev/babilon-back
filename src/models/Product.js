@@ -11,12 +11,12 @@ const productSchema = new Schema({
   usLang: {
     description: String,
     description_small: String,
-    features: [String],
+    featuresText: [String],
   },
   esLang: {
     description: String,
     description_small: String,
-    features: [String],
+    featuresText: [String],
   },
   colors: [
     {
@@ -25,6 +25,7 @@ const productSchema = new Schema({
       rutas: [String],
     },
   ],
+  rutas: [String],
 });
 
 export default model("Product", productSchema);
