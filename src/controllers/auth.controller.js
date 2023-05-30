@@ -1,6 +1,6 @@
 import UserB from "../models/User";
 import jwt from "jsonwebtoken";
-import config from "../config";
+import { SECRET } from "../config";
 import Role from "../models/Role";
 
 export const signUp = async (req, res) => {
@@ -22,7 +22,7 @@ export const signUp = async (req, res) => {
 
   const savedUser = await newUserB.save();
 
-  const token = jwt.sign({ id: savedUser._id }, config.SECRET, {
+  const token = jwt.sign({ id: savedUser._id }, SECRET, {
     expiresIn: 86400,
   });
 
@@ -44,7 +44,7 @@ export const signIn = async (req, res) => {
   if (!matchPasword)
     return res.status(400).json({ token: null, message: "Invalid password" });
 
-  const token = jwt.sign({ id: userFound._id }, config.SECRET, {
+  const token = jwt.sign({ id: userFound._id }, SECRET, {
     expiresIn: 86400,
   });
 
