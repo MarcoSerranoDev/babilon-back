@@ -1,6 +1,7 @@
 import express from "express";
 import morgan from "morgan";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 import { createRoles } from "./libs/initialSetup";
 import productsRoutes from "./routes/products.routes";
@@ -17,9 +18,13 @@ createRoles();
 app.set("port", process.env.PORT || 4000);
 
 //Meddlewares
-const corsOptions = {};
+const corsOptions = {
+  origin: "http://localhost:3000",
+  credentials: true,
+};
 app.use(cors(corsOptions));
 app.use(morgan("dev"));
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
