@@ -1,7 +1,7 @@
 import User from "../models/User";
-import jwt from "jsonwebtoken";
-import { SECRET } from "../config";
 import Role from "../models/Role";
+import jwt from "jsonwebtoken";
+import { SECRET, SECRET_REF } from "../config";
 
 export const signUp = async (req, res) => {
   const { username, email, password, roles } = req.body;
@@ -9,7 +9,7 @@ export const signUp = async (req, res) => {
   const newUser = new User({
     username,
     email,
-    password: await UserB.encryptPassword(password),
+    password: await User.encryptPassword(password),
   });
 
   if (roles) {
@@ -45,12 +45,26 @@ export const signIn = async (req, res) => {
     expiresIn: 86400,
   });
 
-  res.cookie("token", token);
+  const refresh = jwt.sign({ id: userFound._id }, SECRET_REF, {
+    expiresIn: "1d",
+  });
+
+  userFound.refreshToken = refresh;
+  userFound.accessToken = token;
+
+  const result = await userFound.save();
+
+  res.cookie("token", refresh, {
+    secure: true,
+    sameSite: "None",
+    maxAge: 24 * 60 * 60 * 1000,
+  });
 
   res.json({
-    username: userFound.username,
-    email: userFound.email,
+    username: result.username,
+    email: result.email,
     roles: userFound.roles.map((rol) => rol.name),
+    accessToken: token,
   });
 };
 
@@ -59,7 +73,7 @@ export const verifyToken = async (req, res) => {
 
   if (!token) return res.send(false);
 
-  jwt.verify(token, SECRET, async (error, user) => {
+  jwt.verify(token, SECRET_REF, async (error, user) => {
     if (error) return res.sendStatus(401);
 
     const userFound = await User.findById(user.id).populate("roles");
@@ -69,6 +83,51 @@ export const verifyToken = async (req, res) => {
       username: userFound.username,
       email: userFound.email,
       roles: userFound.roles.map((rol) => rol.name),
+      accessToken: userFound.accessToken,
     });
+  });
+};
+
+export const logout = async (req, res) => {
+  const { token } = req.cookies;
+  if (!token) return res.status(204).json({ message: "No content" });
+
+  const userFound = await User.findOne({ refreshToken: token }).exec();
+
+  if (!userFound) {
+    res.clearCookie("token", {
+      httpOnly: true,
+      sameSite: "None",
+      secure: true,
+    });
+    return res.status(204);
+  }
+
+  userFound.refreshToken = "";
+  userFound.accessToken = "";
+  await userFound.save();
+
+  res.clearCookie("token", { httpOnly: true, sameSite: "None", secure: true });
+  return res.status(204).json("logout user");
+};
+
+export const refreshToken = async (req, res) => {
+  const cookies = req.cookies;
+  if (!cookies?.token) return res.status(401);
+
+  const refreshToken = cookies.token;
+
+  const userFound = await User.findOne({ refreshToken });
+
+  if (!userFound) return res.status(403);
+
+  jwt.verify(refreshToken, SECRET_REF, async (err, decoded) => {
+    if (err || userFound._id !== decoded.id) return res.status(403);
+    const newAccessToken = jwt.sign({ id: userFound._id }, SECRET, {
+      expiresIn: 86400,
+    });
+    userFound.accessToken = newAccessToken;
+    await userFound.save();
+    res.json({ newAccessToken });
   });
 };

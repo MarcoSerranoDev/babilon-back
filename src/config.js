@@ -4,3 +4,4 @@ config();
 
 export const MONGODB_URL = process.env.MONGODB_URL;
 export const SECRET = process.env.SECRET;
+export const SECRET_REF = process.env.SECRET_REF;

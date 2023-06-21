@@ -21,6 +21,8 @@ const schemaUser = new Schema(
         type: Schema.Types.ObjectId,
       },
     ],
+    refreshToken: String,
+    accessToken: String,
   },
   {
     timestamps: true,
