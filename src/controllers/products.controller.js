@@ -7,16 +7,9 @@ export const createProduct = async (req, res) => {
 };
 
 export const getProducts = async (req, res) => {
-  const { q } = req.query;
   const query = req.query;
-  if (q) {
-    const products = await Product.find();
-    return res.json(
-      products.filter((el) => el.modelo.toLowerCase().includes(q))
-    );
-  }
   const products = await Product.find(query);
-  return res.json(products);
+  return res.status(200).json(products);
 };
 
 export const getProductById = async (req, res) => {
