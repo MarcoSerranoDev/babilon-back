@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 const productSchema = new Schema({
   id: Number,
@@ -7,7 +7,7 @@ const productSchema = new Schema({
   category: String,
   type: String,
   top: { type: Boolean, default: false },
-  gama: { type: String, default: "null" },
+  gama: { type: String, default: 'null' },
   usLang: {
     description: String,
     description_small: String,
@@ -26,6 +26,12 @@ const productSchema = new Schema({
     },
   ],
   rutas: [String],
+  subModelsTest: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Product',
+    },
+  ],
 });
 
-export default model("Product", productSchema);
+export default model('Product', productSchema);
