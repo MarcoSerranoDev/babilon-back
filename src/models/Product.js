@@ -32,6 +32,15 @@ const productSchema = new Schema({
       ref: 'Product',
     },
   ],
+  frets: {
+    img: [String],
+    title: String,
+    description: {
+      usLang: String,
+      esLang: String,
+    },
+  },
+  underReview: Boolean,
 });
 
 export default model('Product', productSchema);
