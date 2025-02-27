@@ -22,6 +22,8 @@ const productSchema = new Schema({
     {
       color: String,
       code: String,
+      png: String,
+      newTag: Boolean,
       rutas: [String],
     },
   ],
@@ -41,6 +43,7 @@ const productSchema = new Schema({
     },
   },
   underReview: Boolean,
+  newTag: Boolean,
 });
 
 export default model('Product', productSchema);

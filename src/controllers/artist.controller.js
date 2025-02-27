@@ -1,10 +1,10 @@
-import Artist from "../models/Artist";
+import Artist from '../models/Artist';
 
 export const createArtist = async (req, res) => {
   try {
     const newArtist = new Artist(req.body);
     await newArtist.save();
-    res.status(200).json({ message: "Artist created" });
+    res.status(200).json({ message: 'Artist created' });
   } catch (error) {
     console.log(error);
   }
@@ -12,7 +12,7 @@ export const createArtist = async (req, res) => {
 
 export const getArtists = async (req, res) => {
   try {
-    const artists = await Artist.find();
+    const artists = await Artist.find({ isDeleted: false });
     res.status(200).json(artists);
   } catch (error) {
     console.log(error);
@@ -43,7 +43,7 @@ export const deleteArtistById = async (req, res) => {
   const { id } = req.params;
   try {
     await Artist.findByIdAndDelete(id);
-    res.status(200).json({ message: "user deleted" });
+    res.status(200).json({ message: 'user deleted' });
   } catch (error) {
     console.log(error);
   }

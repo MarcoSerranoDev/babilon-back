@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 const schemaArtist = new Schema({
   name: String,
@@ -7,6 +7,10 @@ const schemaArtist = new Schema({
   img: String,
   facebook: String,
   twitter: String,
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  },
 });
 
-export default model("Artist", schemaArtist);
+export default model('Artist', schemaArtist);
