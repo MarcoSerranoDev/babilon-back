@@ -13,6 +13,10 @@ export const createArtist = async (req, res) => {
 export const getArtists = async (req, res) => {
   try {
     const artists = await Artist.find({ isDeleted: false });
+
+    // orden
+    artists.sort((a, b) => b.order - a.order);
+
     res.status(200).json(artists);
   } catch (error) {
     console.log(error);

@@ -44,6 +44,9 @@ const productSchema = new Schema({
   },
   underReview: Boolean,
   newTag: Boolean,
+  order: {
+    type: Number,
+  },
 });
 
 export default model('Product', productSchema);
