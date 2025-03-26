@@ -8,9 +8,28 @@ export const createProduct = async (req, res) => {
 
 export const getProducts = async (req, res) => {
   const query = req.query;
-  const products = await Product.find(query).populate('subModelsTest');
+  const products = await Product.find({
+    ...query,
+    underReview: false, // Solo incluir los que no estén en revisión
+  }).populate({
+    path: 'subModelsTest',
+    match: { underReview: false }, // Solo incluir los que no estén en revisión
+  });
 
-  res.json(products);
+  const newProducts = [];
+  const otherProducts = [];
+
+  for (let product of products) {
+    if (product.newTag === true) {
+      newProducts.push(product);
+    } else {
+      otherProducts.push(product);
+    }
+  }
+
+  newProducts.reverse();
+
+  res.json([...newProducts, ...otherProducts]);
 };
 
 export const getProductById = async (req, res) => {
