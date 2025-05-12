@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from 'mongoose';
 
 const schemaEvent = new Schema({
   tag: String,
@@ -16,6 +16,10 @@ const schemaEvent = new Schema({
     largeInfo: [String],
   },
   imagesEvent: [String],
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  },
 });
 
-export default model("Event", schemaEvent);
+export default model('Event', schemaEvent);

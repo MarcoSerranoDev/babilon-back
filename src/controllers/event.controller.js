@@ -12,7 +12,7 @@ export const createEvent = async (req, res) => {
 
 export const getEvents = async (req, res) => {
   try {
-    const events = await Event.find(req.query);
+    const events = await Event.find({ ...req.query, isDeleted: false });
     res.json(events);
   } catch (error) {
     console.log(error);

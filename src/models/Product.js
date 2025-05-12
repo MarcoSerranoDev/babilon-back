@@ -47,6 +47,10 @@ const productSchema = new Schema({
   order: {
     type: Number,
   },
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 export default model('Product', productSchema);
