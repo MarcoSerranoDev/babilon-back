@@ -1,56 +1,66 @@
 import { Schema, model } from 'mongoose';
 
-const productSchema = new Schema({
-  id: Number,
-  serie: String,
-  modelo: String,
-  category: String,
-  type: String,
-  top: { type: Boolean, default: false },
-  gama: { type: String, default: 'null' },
-  usLang: {
-    description: String,
-    description_small: String,
-    featuresText: [String],
-  },
-  esLang: {
-    description: String,
-    description_small: String,
-    featuresText: [String],
-  },
-  colors: [
-    {
-      color: String,
-      code: String,
-      png: String,
-      newTag: Boolean,
-      rutas: [String],
+const productSchema = new Schema(
+  {
+    id: Number,
+    serie: String,
+    modelo: String,
+    category: String,
+    type: String,
+    top: { type: Boolean, default: false },
+    gama: { type: String, default: 'null' },
+    usLang: {
+      description: String,
+      description_small: String,
+      featuresText: [String],
     },
-  ],
-  rutas: [String],
-  subModelsTest: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Product',
+    esLang: {
+      description: String,
+      description_small: String,
+      featuresText: [String],
     },
-  ],
-  frets: {
-    img: [String],
-    title: String,
-    description: {
-      usLang: String,
-      esLang: String,
+    colors: [
+      {
+        color: String,
+        code: String,
+        png: String,
+        newTag: Boolean,
+        rutas: [String],
+      },
+    ],
+    rutas: [String],
+    subModelsTest: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Product',
+      },
+    ],
+    frets: {
+      img: [String],
+      title: String,
+      description: {
+        usLang: String,
+        esLang: String,
+      },
+    },
+    underReview: Boolean,
+    newTag: Boolean,
+    order: {
+      type: Number,
+      default: 0,
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
+    isSubModel: {
+      type: Boolean,
+      default: false,
     },
   },
-  underReview: Boolean,
-  newTag: Boolean,
-  order: {
-    type: Number,
-  },
-  isDeleted: {
-    type: Boolean,
-    default: false,
-  },
-});
+  {
+    timestamps: true,
+  }
+);
 
 export default model('Product', productSchema);

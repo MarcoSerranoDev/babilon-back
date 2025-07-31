@@ -42,6 +42,18 @@ export const getProductById = async (req, res) => {
   }
 };
 
+export const updateProduct = async (req, res) => {
+  try {
+    const productUpdate = await Product.findOneAndUpdate(req.query, req.body, {
+      new: true,
+    });
+
+    res.json(productUpdate);
+  } catch (error) {
+    console.log(error.mesagge);
+  }
+};
+
 export const updateProductById = async (req, res) => {
   const { id } = req.params;
   try {

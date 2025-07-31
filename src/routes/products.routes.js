@@ -1,29 +1,35 @@
-import { Router } from "express";
+import { Router } from 'express';
 const router = Router();
 
-import * as productsCtrl from "../controllers/products.controller";
-import { authJwt } from "../middlewares";
+import * as productsCtrl from '../controllers/products.controller';
+import { authJwt } from '../middlewares';
 
-router.get("/topProducts", productsCtrl.getTopProducts);
+router.get('/topProducts', productsCtrl.getTopProducts);
 
-router.get("/:id", productsCtrl.getProductById);
+router.get('/:id', productsCtrl.getProductById);
 
-router.get("/", productsCtrl.getProducts);
+router.get('/', productsCtrl.getProducts);
 
 router.post(
-  "/",
+  '/',
   [authJwt.verifyToken, authJwt.isAdmin],
   productsCtrl.createProduct
 );
 
 router.put(
-  "/:id",
+  '/',
+  [authJwt.verifyToken, authJwt.isEditor],
+  productsCtrl.updateProduct
+);
+
+router.put(
+  '/:id',
   [authJwt.verifyToken, authJwt.isEditor],
   productsCtrl.updateProductById
 );
 
 router.delete(
-  "/:id",
+  '/:id',
   [authJwt.verifyToken, authJwt.isAdmin],
   productsCtrl.deleteProductById
 );

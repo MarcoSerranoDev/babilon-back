@@ -20,6 +20,7 @@ const schemaEvent = new Schema({
     type: Boolean,
     default: false,
   },
+  gallery: [String],
 });
 
 export default model('Event', schemaEvent);
