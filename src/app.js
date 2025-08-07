@@ -17,10 +17,10 @@ createRoles();
 app.set('port', process.env.PORT || 4000);
 
 //Meddlewares
-const corsOptions = {
-  origin: 'https://www.babilonguitars.com',
-};
-app.use(cors(corsOptions));
+// const corsOptions = {
+//   origin: 'https://www.babilonguitars.com',
+// };
+app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
