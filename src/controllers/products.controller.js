@@ -16,20 +16,7 @@ export const getProducts = async (req, res) => {
     match: { underReview: false }, // Solo incluir los que no estén en revisión
   });
 
-  const newProducts = [];
-  const otherProducts = [];
-
-  for (let product of products) {
-    if (product.newTag === true) {
-      newProducts.push(product);
-    } else {
-      otherProducts.push(product);
-    }
-  }
-
-  newProducts.reverse();
-
-  res.json([...newProducts, ...otherProducts]);
+  res.json(products);
 };
 
 export const getProductById = async (req, res) => {

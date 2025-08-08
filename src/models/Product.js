@@ -43,7 +43,10 @@ const productSchema = new Schema(
         esLang: String,
       },
     },
-    underReview: Boolean,
+    underReview: {
+      type: Boolean,
+      default: false,
+    },
     newTag: Boolean,
     order: {
       type: Number,
@@ -55,7 +58,6 @@ const productSchema = new Schema(
     },
     isSubModel: {
       type: Boolean,
-      default: false,
     },
   },
   {
