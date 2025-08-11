@@ -1,22 +1,30 @@
 import Product from '../models/Product';
 
 export const createProduct = async (req, res) => {
-  const newProduct = new Product(req.body);
-  await newProduct.save();
-  res.status(201).json('Product created');
+  try {
+    const newProduct = new Product(req.body);
+    await newProduct.save();
+    res.status(201).json('Product created');
+  } catch (error) {
+    console.log(error.message);
+  }
 };
 
 export const getProducts = async (req, res) => {
-  const query = req.query;
-  const products = await Product.find({
-    ...query,
-    underReview: false, // Solo incluir los que no estén en revisión
-  }).populate({
-    path: 'subModelsTest',
-    match: { underReview: false }, // Solo incluir los que no estén en revisión
-  });
+  try {
+    const query = req.query;
+    const products = await Product.find({
+      ...query,
+      underReview: false, // Solo incluir los que no estén en revisión
+    }).populate({
+      path: 'subModelsTest',
+      match: { underReview: false }, // Solo incluir los que no estén en revisión
+    });
 
-  res.json(products);
+    res.json(products);
+  } catch (error) {
+    console.log(error.mesagge);
+  }
 };
 
 export const getProductById = async (req, res) => {

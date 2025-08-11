@@ -12,10 +12,10 @@ export const createArtist = async (req, res) => {
 
 export const getArtists = async (req, res) => {
   try {
-    const artists = await Artist.find({ isDeleted: false });
-
-    // orden
-    artists.sort((a, b) => b.order - a.order);
+    const artists = await Artist.find({ isDeleted: false }).sort({
+      order: 1,
+      updatedAt: -1,
+    });
 
     res.status(200).json(artists);
   } catch (error) {
@@ -38,6 +38,20 @@ export const updateArtistById = async (req, res) => {
   try {
     const artistUpdated = await Artist.findByIdAndUpdate(id, req.body);
     res.status(200).json({ message: `Artist ${artistUpdated.name} updated` });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateArtistByName = async (req, res) => {
+  const { name } = req.params;
+
+  try {
+    const artistUpdated = await Artist.findOneAndUpdate({ name }, req.body, {
+      new: true,
+    });
+
+    res.status(200).json(artistUpdated);
   } catch (error) {
     console.log(error);
   }
