@@ -42,7 +42,7 @@ export const updateEventById = async (req, res) => {
 export const deleteEventById = async (req, res) => {
   const { id } = req.params;
   try {
-    await Event.findByIdAndDelete(id);
+    await Event.findByIdAndUpdate(id, { isDeleted: true });
     res.status(200).json('Product deleted');
   } catch (error) {
     console.log(error);

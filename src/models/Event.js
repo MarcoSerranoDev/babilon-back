@@ -20,7 +20,9 @@ const schemaEvent = new Schema({
     type: Boolean,
     default: false,
   },
+  isMain: Boolean,
   gallery: [String],
+  order: Number,
 });
 
 export default model('Event', schemaEvent);
