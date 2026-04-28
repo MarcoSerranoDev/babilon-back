@@ -12,7 +12,7 @@ export const createArtist = async (req, res) => {
 
 export const getArtists = async (req, res) => {
   try {
-    const artists = await Artist.find({ isDeleted: false }).sort({
+    const artists = await Artist.find({ ...req.query, isDeleted: false }).sort({
       order: 1,
       updatedAt: -1,
     });

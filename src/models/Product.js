@@ -5,7 +5,11 @@ const productSchema = new Schema(
     id: Number,
     serie: String,
     modelo: String,
-    category: String,
+    category: {
+      type: String,
+      enum: ['guitars', 'bass', 'ukuleles', 'strings', 'amplification'],
+      require: true,
+    },
     type: String,
     top: { type: Boolean, default: false },
     gama: { type: String, default: 'null' },
@@ -19,15 +23,21 @@ const productSchema = new Schema(
       description_small: String,
       featuresText: [String],
     },
+    cases: [String],
     colors: [
       {
         color: String,
         code: String,
         png: String,
-        newTag: Boolean,
+        newTag: {
+          type: Boolean,
+          default: false,
+        },
         rutas: [String],
       },
     ],
+    lifestyleGallery: [String],
+    heroImg: String,
     rutas: [String],
     subModelsTest: [
       {
@@ -58,11 +68,12 @@ const productSchema = new Schema(
     },
     isSubModel: {
       type: Boolean,
+      default: false,
     },
   },
   {
     timestamps: true,
-  }
+  },
 );
 
 export default model('Product', productSchema);
