@@ -11,6 +11,7 @@ import guitarRoutes from './routes/guitar.routes';
 import eventRoutes from './routes/event.routes';
 import serieRoutes from './routes/serie.routes';
 import orderRoutes from './routes/order.routes';
+import subSerieRoutes from './routes/subSerie.routes';
 
 const app = express();
 createRoles();
@@ -31,6 +32,7 @@ app.use('/api/babilon/v1/artist', artistRoutes);
 app.use('/api/babilon/v1/guitar', guitarRoutes);
 app.use('/api/babilon/v1/events', eventRoutes);
 app.use('/api/babilon/v1/serie', serieRoutes);
+app.use('/api/babilon/v1/subseries', subSerieRoutes);
 app.use('/api/babilon/v1/order', orderRoutes);
 
 export default app;

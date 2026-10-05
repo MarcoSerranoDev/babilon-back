@@ -3,8 +3,9 @@ import { Schema, model } from 'mongoose';
 const productSchema = new Schema(
   {
     id: Number,
-    serie: String,
+    serie: String, //? posible propiedad extra slugSerie
     modelo: String,
+    slug: String,
     category: {
       type: String,
       enum: ['guitars', 'bass', 'ukuleles', 'strings', 'amplification'],
@@ -25,6 +26,7 @@ const productSchema = new Schema(
     },
     cases: [String],
     colors: [
+      //! se va a remplasar por variants, para futuras especificaciones extras aparte de solo colores
       {
         color: String,
         code: String,
@@ -36,15 +38,25 @@ const productSchema = new Schema(
         rutas: [String],
       },
     ],
+    variants: [
+      {
+        colorName: String,
+        colorCode: String,
+        colorPNG: String,
+        isNewColor: Boolean,
+        productPhotos: [String],
+      },
+    ],
+    subModelImg: String,
     lifestyleGallery: [String],
     heroImg: String,
     rutas: [String],
-    subModelsTest: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Product',
-      },
-    ],
+    // subModelsTest: [
+    //   {
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'Product',
+    //   },
+    // ],
     frets: {
       img: [String],
       title: String,
@@ -57,6 +69,10 @@ const productSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    hide: {
+      type: Boolean,
+      default: false,
+    },
     newTag: Boolean,
     order: {
       type: Number,
@@ -66,10 +82,15 @@ const productSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    isSubModel: {
-      type: Boolean,
-      default: false,
+    // isSubModel: {
+    //   type: Boolean,
+    //   default: false,
+    // },
+    subSerie: {
+      type: Schema.Types.ObjectId,
+      ref: 'SubSerie',
     },
+    subSerieName: String,
   },
   {
     timestamps: true,

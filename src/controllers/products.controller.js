@@ -17,8 +17,8 @@ export const getProducts = async (req, res) => {
       ...query,
       underReview: false, // Solo incluir los que no estén en revisión
     }).populate({
-      path: 'subModelsTest',
-      match: { underReview: false }, // Solo incluir los que no estén en revisión
+      path: 'subSerie',
+      populate: { path: 'models', select: 'modelo slug subModelImg variants' },
     });
 
     res.json(products);
